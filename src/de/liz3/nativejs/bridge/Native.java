@@ -1,5 +1,7 @@
 package de.liz3.nativejs.bridge;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.swing.*;
@@ -19,12 +21,10 @@ public class Native {
 
     public static URLClassLoader loader;
     private ScriptEngine engine;
-    public Native(ScriptEngine engine) {this.engine = engine;}
+    public Native(ScriptEngine engine) {
+        this.engine = engine;
 
-    public void println(String msg) {
-        System.out.println(msg);
     }
-
     public void exit(int code) {
         System.exit(code);
     }
@@ -51,33 +51,6 @@ public class Native {
         }
         return "";
     }
-    public void require(File file, boolean nativeAsnc) {
-        if(nativeAsnc)  {
-            Thread worker = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        engine.eval(new FileReader(file));
-                    } catch (ScriptException | FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            worker.setName("Require Worker for: "+ file.getAbsolutePath());
-            worker.start();
-            return;
-        }
-        try {
-            engine.eval(new FileReader(file));
-        } catch (ScriptException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void require(String path, boolean nativeAsync) {
-        require(new File(path), nativeAsync);
-    }
-
     public Object instream() {
         return System.in;
     }

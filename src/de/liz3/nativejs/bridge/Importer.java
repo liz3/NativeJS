@@ -11,8 +11,8 @@ import java.net.URLClassLoader;
 public class Importer {
 
     public boolean loadJNative(String name, String path) {
-        try {
 
+        try {
            Loader.loaders.put(name, new URLClassLoader(new URL[] { new File(path).toURI().toURL()}));
 
             return true;
