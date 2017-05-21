@@ -1,10 +1,7 @@
 package de.liz3.nativejs.gui;
 
 import de.liz3.nativejs.NativeProcess;
-import de.liz3.nativejs.bridge.Native;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,12 +13,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.PrintStream;
 
-/**
- * Created by liz3 on 20.05.17.
- */
 public class GuiManager extends Application {
 
     private File chooserFile = null;
+    private NativeProcess process = null;
 
     public static void start() {
         launch();
@@ -43,23 +38,27 @@ public class GuiManager extends Application {
                     new FileChooser.ExtensionFilter("NativeJS Files", "*.js")
             );
             chooserFile = dirChooser.showOpenDialog(fileChooserWindow);
+            if (chooserFile != null) c.fileName.setText(chooserFile.getName());
 
         });
         c.launchBtn.setOnAction(event -> {
-
             if (chooserFile == null) return;
-
             TextArea area = new TextArea();
             area.setEditable(false);
             Stage stage = new Stage();
             BorderPane pane = new BorderPane();
             pane.setCenter(area);
             Scene scene = new Scene(pane);
+            stage.setOnCloseRequest(event1 -> {
+                if (process != null) process.killProcess();
+            });
             stage.setScene(scene);
             stage.setTitle("NativeJS - " + chooserFile.getName());
             stage.show();
-            System.setOut(new PrintStream(new AreaOutputStream(area)));
-            new Thread(() -> new NativeProcess(chooserFile)).start();
+            PrintStream stream = new PrintStream(new AreaOutputStream(area));
+            System.setOut(stream);
+            System.setErr(stream);
+            new Thread(() -> process = new NativeProcess(chooserFile, c.startArgFields.getText().split(" "))).start();
 
         });
         primaryStage.setTitle("NativeJS Launcher");

@@ -2,12 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="127.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.liz3.nativejs.gui.Controller">
-   <children>
-      <Label layoutX="18.0" prefHeight="57.0" prefWidth="288.0" text="Because no start File was Provided, &#10;from here you can Launch a NativeJS Process!&#10;" />
-      <Button fx:id="chooseBtn" layoutX="18.0" layoutY="57.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="91.0" text="Choose File" />
-      <Button fx:id="launchBtn" layoutX="239.0" layoutY="84.0" mnemonicParsing="false" text="Launch!" />
-   </children>
+<AnchorPane prefHeight="205.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.liz3.nativejs.gui.Controller">
+   <Label layoutX="18.0" prefHeight="57.0" prefWidth="288.0"
+          text="Because no start File was Provided, &#10;from here you can Launch a NativeJS Process!&#10;"/>
+   <Button fx:id="chooseBtn" layoutX="18.0" layoutY="57.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="91.0"
+           text="Choose File"/>
+   <Button fx:id="launchBtn" layoutX="242.0" layoutY="164.0" mnemonicParsing="false" text="Launch!"/>
+   <TextField fx:id="startArgFields" layoutX="21.0" layoutY="128.0" prefHeight="27.0" prefWidth="288.0"/>
+   <Label layoutX="18.0" layoutY="103.0" text="Start Argumments:"/>
+   <Label fx:id="fileName" layoutX="117.0" layoutY="62.0" text="File name"/>
 </AnchorPane>

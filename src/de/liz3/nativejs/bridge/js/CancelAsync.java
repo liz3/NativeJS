@@ -3,11 +3,11 @@ package de.liz3.nativejs.bridge.js;
 import de.liz3.nativejs.NativeProcess;
 import jdk.nashorn.api.scripting.AbstractJSObject;
 
-public class ClearTimeout extends AbstractJSObject {
+public class CancelAsync extends AbstractJSObject {
 
     private NativeProcess process;
 
-    public ClearTimeout(NativeProcess process) {
+    public CancelAsync(NativeProcess process) {
         this.process = process;
     }
 
@@ -18,11 +18,10 @@ public class ClearTimeout extends AbstractJSObject {
 
     @Override
     public Object call(Object thiz, Object... args) {
-        Integer id = (Integer) args[0];
-        Thread x = process.getTimeOuts().get(id);
-        x.interrupt();
-        process.getTimeOuts().remove(id);
-        return true;
+        int id = (Integer) args[0];
+        if (!process.getAsyncOps().containsKey(id)) return null;
+        process.getAsyncOps().get(id).interrupt();
+        process.getAsyncOps().remove(id);
+        return null;
     }
-
 }

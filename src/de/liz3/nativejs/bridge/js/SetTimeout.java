@@ -4,15 +4,11 @@ import de.liz3.nativejs.NativeProcess;
 import jdk.nashorn.api.scripting.AbstractJSObject;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
-import javax.script.ScriptEngine;
-
-/**
- * Created by liz3 on 19.05.17.
- */
 public class SetTimeout extends AbstractJSObject {
 
     private NativeProcess process;
-    public SetTimeout(NativeProcess process)  {
+
+    public SetTimeout(NativeProcess process) {
         this.process = process;
     }
 
@@ -23,10 +19,10 @@ public class SetTimeout extends AbstractJSObject {
 
     @Override
     public Object call(Object thiz, Object... args) {
-        ScriptObjectMirror mir = (ScriptObjectMirror)args[0];
-        int id = process.getTimouts().size() + 1;
+        ScriptObjectMirror mir = (ScriptObjectMirror) args[0];
+        int id = process.getTimeOuts().size() + 1;
         int sleep = (Integer) args[1];
-       Thread x = new Thread(() -> {
+        Thread x = new Thread(() -> {
             try {
                 Thread.sleep(sleep);
                 mir.call(thiz, args);
@@ -35,8 +31,8 @@ public class SetTimeout extends AbstractJSObject {
             }
 
         });
-       process.getTimouts().put(id, x);
-       x.start();
+        process.getTimeOuts().put(id, x);
+        x.start();
 
         return id;
     }

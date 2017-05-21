@@ -1,13 +1,8 @@
 package de.liz3.nativejs.bridge;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
-import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -19,30 +14,40 @@ import java.util.HashMap;
 
 public class Native {
 
-    public static URLClassLoader loader;
     private ScriptEngine engine;
-    public Native(ScriptEngine engine) {
-        this.engine = engine;
+    private String[] startArgs;
 
+    Native(ScriptEngine engine, String[] startArgs) {
+        this.engine = engine;
+        this.startArgs = startArgs;
     }
+
     public void exit(int code) {
         System.exit(code);
     }
+
     public String jproperty(String name) {
         return System.getProperty(name);
     }
+
     public Object file(String path) {
 
         return new File(path);
     }
 
+    public String[] startArgs() {
+        return startArgs;
+    }
+
     public HashMap<Object, Object> jmap() {
         return new HashMap<>();
     }
+
     public Object jruntime() {
 
         return Runtime.getRuntime();
     }
+
     public String cdir() {
         try {
             return new File(".").getCanonicalPath();
@@ -51,21 +56,23 @@ public class Native {
         }
         return "";
     }
+
     public Object instream() {
         return System.in;
     }
+
     public Object outstream() {
         return System.out;
     }
-    public Object typeFromLib(String fullName, String loader, boolean init, Object[] vals,  Class<?> ... params) {
 
+    public Object typeFromLib(String fullName, String loader, boolean init, Object[] vals, Class<?>... params) {
 
 
         try {
 
             Constructor constructor = null;
 
-            if(loader != null) {
+            if (loader != null) {
                 constructor = Class.forName(fullName, init, Loader.loaders.get(loader)).getConstructor(params);
             } else {
                 constructor = Class.forName(fullName).getConstructor(params);
@@ -83,10 +90,11 @@ public class Native {
 
         return null;
     }
+
     public Object staticLibInvoke(String fullName, String methodName, String loader, Object[] args, Class<?>... params) {
 
         Class cl = null;
-        if(loader == null) {
+        if (loader == null) {
             try {
                 cl = Class.forName(fullName);
             } catch (ClassNotFoundException e) {
@@ -94,7 +102,7 @@ public class Native {
             }
         } else {
             try {
-                cl = Class.forName(fullName,false, Loader.loaders.get(loader));
+                cl = Class.forName(fullName, false, Loader.loaders.get(loader));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -113,6 +121,7 @@ public class Native {
         }
         return null;
     }
+
     public Object type(String fullname) throws NoSuchMethodException {
         try {
             return engine.eval("Java.type(\"" + fullname + "\")");
@@ -126,7 +135,7 @@ public class Native {
     public boolean loadJNative(String name, String path) {
         try {
 
-            Loader.loaders.put(name, new URLClassLoader(new URL[] { new File(path).toURI().toURL()}));
+            Loader.loaders.put(name, new URLClassLoader(new URL[]{new File(path).toURI().toURL()}));
 
             return true;
         } catch (MalformedURLException e) {
