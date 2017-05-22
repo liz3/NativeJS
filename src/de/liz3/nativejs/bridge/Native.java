@@ -1,5 +1,7 @@
 package de.liz3.nativejs.bridge;
 
+import de.liz3.nativejs.bridge.jxfx.FXIniter;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import java.io.File;
@@ -34,9 +36,13 @@ public class Native {
 
         return new File(path);
     }
-
     public String[] startArgs() {
         return startArgs;
+    }
+
+    public Object jResourceStream(String link) {
+
+        return getClass().getResourceAsStream(link);
     }
 
     public HashMap<Object, Object> jmap() {
@@ -44,6 +50,7 @@ public class Native {
     }
 
     public Object jruntime() {
+
 
         return Runtime.getRuntime();
     }
@@ -90,6 +97,8 @@ public class Native {
 
         return null;
     }
+
+
 
     public Object staticLibInvoke(String fullName, String methodName, String loader, Object[] args, Class<?>... params) {
 

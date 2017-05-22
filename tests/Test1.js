@@ -5,13 +5,53 @@
 nat.loadJNative("image4j", "/Users/liz3/Downloads/image4j-core-0.7.1/image4j.jar");
 nat.loadJNative("jutils", "/Users/liz3/Downloads/JUtils.jar");
 requireNative("/Users/liz3/Documents/IntelliJProjects/NativeJS/NativeJSLib/Std-NativeJSLib.js", false);
+async(function () {
+    fxInit(function (mainStage) {
+        createApp(mainStage);
+    });
 
-setInterval(function () {
-    println("Cool!");
-}, 500);
+});
+
+
+function createApp(mainStage) {
+    println("Created");
+
+    mainStage.setTitle("Test App");
+    var pane = createInstance("javafx.scene.layout.BorderPane", null);
+    var area = createInstance("javafx.scene.control.TextArea", null);
+    mainStage.setOnCloseRequest(function () {
+
+    });
+    pane.setCenter(area);
+    mainStage.setScene(createInstance("javafx.scene.Scene", pane, 800, 500));
+
+    mainStage.centerOnScreen();
+
+    mainStage.show();
+
+}
+
+println(nat.startArgs()[0]);
+/*var thread = createInstance("java.lang.Thread", invokable(function () {
+ setInterval(function () {
+ println("Cool!");
+ }, 2000);
+ }));
+
+ thread.start();
+ fxInvoke(function () {
+ createApp(createInstance("javafx.stage.Stage", null));
+
+ });
+ */
+
+/*setTimeout(function () {
+   fxInvoke();
+}, 3000); */
+
 function simpleWindow() {
-    var frame = nativeFrame("Test");
-    var label = nativeLabel("Test text");
+    var frame = nativeFrame("Test Frame");
+    var label = nativeLabel("Was geht junge?");
     frame.getContentPane().add(label);
     frame.setSize(200, 100);
     frame.pack();
@@ -24,7 +64,7 @@ function cmdListener() {
     var id = setInterval(function () {
 
         var line = scanner.nextLine();
-        if(line == "stop") {
+        if (line == "stop") {
             clearInterval(id)
 
         }

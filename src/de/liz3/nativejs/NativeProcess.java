@@ -59,20 +59,22 @@ public class NativeProcess {
         Pattern p = Pattern.compile("pre\\s*\\(\\s*function\\s*\\(\\s*\\)\\s*\\{.*}\\s*\\)\\s*;", Pattern.MULTILINE | Pattern.DOTALL);
 
         Matcher matcher = p.matcher(all.toString());
-        String f = matcher.group();
-        all = new StringBuilder(all.toString().replace(f, ""));
-        while (!f.startsWith("{")) {
+        while (matcher.find()) {
+            String f = matcher.group();
+            all = new StringBuilder(all.toString().replace(f, ""));
+            while (!f.startsWith("{")) {
+                f = f.substring(1);
+            }
             f = f.substring(1);
-        }
-        f = f.substring(1);
-        while (!f.endsWith("}")) {
+            while (!f.endsWith("}")) {
+                f = f.substring(0, f.length() - 1);
+            }
             f = f.substring(0, f.length() - 1);
-        }
-        f = f.substring(0, f.length() - 1);
-        try {
-            importerEng.eval(f);
-        } catch (ScriptException e) {
-            e.printStackTrace();
+            try {
+                importerEng.eval(f);
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            }
         }
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         Creator.createBinding(engine, this, startArgs);

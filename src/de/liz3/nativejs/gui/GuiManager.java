@@ -50,7 +50,6 @@ public class GuiManager extends Application {
             pane.setCenter(area);
             Scene scene = new Scene(pane);
             stage.setOnCloseRequest(event1 -> {
-                if (process != null) process.killProcess();
             });
             stage.setScene(scene);
             stage.setTitle("NativeJS - " + chooserFile.getName());

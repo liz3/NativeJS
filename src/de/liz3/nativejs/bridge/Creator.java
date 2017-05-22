@@ -2,6 +2,7 @@ package de.liz3.nativejs.bridge;
 
 import de.liz3.nativejs.NativeProcess;
 import de.liz3.nativejs.bridge.js.*;
+import de.liz3.nativejs.bridge.jxfx.FXInvoke;
 
 import javax.script.ScriptEngine;
 
@@ -19,6 +20,9 @@ public class Creator {
         engine.put("requireNative", new Require(engine));
         engine.put("async", new Async(process));
         engine.put("clearAsync", new CancelAsync(process));
+        engine.put("invokable", new Invokable());
+        engine.put("fxInit", new FxRun());
+     //   engine.put("fxInvoke", new FXInvoke());
     }
 }
 
