@@ -1,7 +1,5 @@
 package de.liz3.nativejs.bridge;
 
-import de.liz3.nativejs.bridge.jxfx.FXIniter;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import java.io.File;
@@ -22,6 +20,7 @@ public class Native {
     Native(ScriptEngine engine, String[] startArgs) {
         this.engine = engine;
         this.startArgs = startArgs;
+
     }
 
     public void exit(int code) {
@@ -36,6 +35,25 @@ public class Native {
 
         return new File(path);
     }
+
+    public boolean checkForType(String key) {
+
+        System.out.println(key);
+        return true;
+    }
+    public char byteToChar(byte b) {
+        return (char)b;
+    }
+    public void sleep(long time) {
+            try {
+                Thread.currentThread();
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+    }
     public String[] startArgs() {
         return startArgs;
     }
@@ -45,7 +63,7 @@ public class Native {
         return getClass().getResourceAsStream(link);
     }
 
-    public HashMap<Object, Object> jmap() {
+    public HashMap<Object, Object> map() {
         return new HashMap<>();
     }
 
@@ -98,7 +116,15 @@ public class Native {
         return null;
     }
 
+    public char getChar(int c) {
+        return (char)c;
+    }
 
+    public Object cast(String type, Object instance) throws ClassNotFoundException {
+
+        return Class.forName(type).cast(instance);
+
+    }
 
     public Object staticLibInvoke(String fullName, String methodName, String loader, Object[] args, Class<?>... params) {
 
