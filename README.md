@@ -7,16 +7,16 @@ One big benefit is that simplify a lot of boilerplate code, no compilation requi
 You can load Jar Files and even make simple Gui Apps with Swing/JavaFX(Limited to one Stage)
 
 # Examples
-1. Print to console: ``` println(message)```
+1. Print to console: ``` println(message); ```
 
 2. How to make a action async: ``` async(function(){
-/* Code goes here */})```
+/* Code goes here */}); ```
 
-3. Create instance of any java class ``` var instance = createInstance("full.class.path", args)```
+3. Create instance of any java class ``` var instance = createInstance("full.class.path", args);```
 
 4. Load java library: To include a java library you provide two arguments, the first is a name, which will be needed on a invoke, 
 trough NativeJS is using Reflection, the second is the path to the file:
-``` nat.loadJNative("LoaderName", "Path/To/jar")```
+``` nat.loadJNative("LoaderName", "Path/To/jar"); ```
 
 5. require another file to include,
 Now this is infact a little more complex, you need 3 or 4 parameters, just as nodejs, NativeJS
