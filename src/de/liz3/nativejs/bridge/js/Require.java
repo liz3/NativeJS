@@ -40,9 +40,14 @@ public class Require extends AbstractJSObject {
         File file = new File((String) args[0]);
         if (nativeAsnc) {
             Thread worker = new Thread(() -> {
-                if(includeOwnExports) newEngine.put((String)args[3], engine.get("exports"));
+                if (includeOwnExports) newEngine.put((String) args[3], engine.get("exports"));
                 try {
-                    newEngine.eval(new FileReader(file));
+                    if (process.isEs6()) {
+                        newEngine.eval(process.getTranspiled().get(file.getAbsolutePath()));
+                    } else {
+                        newEngine.eval(new FileReader(file));
+
+                    }
                 } catch (ScriptException | FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -51,9 +56,15 @@ public class Require extends AbstractJSObject {
             worker.start();
             return null;
         }
-        if(includeOwnExports) newEngine.put((String)args[3], engine.get("exports"));
+        if (includeOwnExports) newEngine.put((String) args[3], engine.get("exports"));
         try {
-            newEngine.eval(new FileReader(file));
+            if (process.isEs6()) {
+                newEngine.eval(process.getTranspiled().get(file.getAbsolutePath()));
+            } else {
+                newEngine.eval(new FileReader(file));
+
+            }
+
             return newEngine.get("exports");
         } catch (ScriptException | FileNotFoundException e) {
             e.printStackTrace();

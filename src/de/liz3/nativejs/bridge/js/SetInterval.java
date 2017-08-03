@@ -4,7 +4,7 @@ import de.liz3.nativejs.NativeProcess;
 import jdk.nashorn.api.scripting.AbstractJSObject;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
-public class SetInterval extends AbstractJSObject {
+public class  SetInterval extends AbstractJSObject {
 
     private NativeProcess process;
 

@@ -1,5 +1,6 @@
 package de.liz3.nativejs.bridge.js.type;
 
+import de.liz3.nativejs.bridge.js.Executable;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
@@ -17,6 +18,8 @@ public class Object {
     }
 
     public java.lang.Object defineProperty(ScriptObjectMirror obj, String x, ScriptObjectMirror props) {
+
+
 
         return true;
     }

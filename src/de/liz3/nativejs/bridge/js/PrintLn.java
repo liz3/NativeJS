@@ -11,7 +11,7 @@ public class PrintLn extends AbstractJSObject {
 
     @Override
     public Object call(Object thiz, Object... args) {
-        System.out.println((String) args[0]);
+        System.out.println( args[0].toString());
         return null;
     }
 }

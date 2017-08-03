@@ -54,7 +54,12 @@ Example:``` var parsed =  nat.staticLibInvoke("java.lang.Integer", "parseInt", "
 
 16. for http post use ``` var content = httpPost("google.de", body, [{key: "Content-type", value: "text/plain"}]) ```, the content looks like: ``` {body: text, responseCode: conn.getResponseCode(), responseHeaders: conn.getHeaderFields()}```
 
+#Notice
+Sadly NativeJS cannot use the Object.prototype function, because the engine does not support that, so if you use Typescript or similar, 
+do not use get and set!
 
-
-# Want to use ES6
+# Want to use ES6?
 No problem, just use the --es6 argument on execution, this will transpile the script to es5
+
+If you are using Multple files use the program in this way: ``` java -jar nativejs.jar --es6 .``` this will use all files in directory(recursive), if you have files, 
+that should not be compiled, add ``` -strict ``` that will exclude every file that does not has the file extension .js
